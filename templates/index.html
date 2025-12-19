@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Request a Song</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: sans-serif; background: #121212; color: #fff; text-align: center; padding: 20px; }
+        input { width: 90%; padding: 15px; margin: 10px 0; border-radius: 5px; border: none; }
+        button { background: #ff0055; color: white; border: none; padding: 15px 30px; font-size: 18px; border-radius: 50px; cursor: pointer; width: 100%; margin-top: 20px;}
+    </style>
+</head>
+<body>
+    <h1>DJ Request Line 🎵</h1>
+    <form method="POST">
+        <input type="text" name="artist" placeholder="Artist Name" required>
+        <input type="text" name="song" placeholder="Song Title" required>
+        <input type="text" name="message" placeholder="Dedication/Message (Optional)">
+        <button type="submit">Send Request</button>
+    </form>
+</body>
+</html>

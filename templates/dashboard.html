@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="refresh" content="10"> <style>
+        body { font-family: monospace; background: #000; color: #0f0; padding: 20px; }
+        .req { border-bottom: 1px solid #333; padding: 10px 0; }
+        .time { color: #666; font-size: 0.8em; }
+        .msg { color: #ff0055; font-style: italic; }
+        a { color: red; text-decoration: none; border: 1px solid red; padding: 5px; }
+    </style>
+</head>
+<body>
+    <h2>Incoming Requests <a href="/clear" style="float:right; font-size:12px;">CLEAR ALL</a></h2>
+    <hr>
+    {% for r in requests %}
+        <div class="req">
+            <span class="time">[{{ r.time }}]</span> 
+            <strong>{{ r.song }}</strong> - {{ r.artist }}
+            {% if r.msg %}<br><span class="msg">"{{ r.msg }}"</span>{% endif %}
+        </div>
+    {% else %}
+        <p>No requests yet...</p>
+    {% endfor %}
+</body>
+</html>
