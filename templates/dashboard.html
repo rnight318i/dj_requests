@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="refresh" content="10"> <style>
-        body { font-family: monospace; background: #000; color: #0f0; padding: 20px; }
-        .req { border-bottom: 1px solid #333; padding: 10px 0; }
-        .time { color: #666; font-size: 0.8em; }
-        .msg { color: #ff0055; font-style: italic; }
-        a { color: red; text-decoration: none; border: 1px solid red; padding: 5px; }
-    </style>
+    <meta http-equiv="refresh" content="10">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>DJ Dashboard</title>
 </head>
 <body>
-    <h2>Incoming Requests <a href="/clear" style="float:right; font-size:12px;">CLEAR ALL</a></h2>
-    <hr>
-    {% for r in requests %}
-        <div class="req">
-            <span class="time">[{{ r.time }}]</span> 
-            <strong>{{ r.song }}</strong> - {{ r.artist }}
-            {% if r.msg %}<br><span class="msg">"{{ r.msg }}"</span>{% endif %}
-        </div>
-    {% else %}
-        <p>No requests yet...</p>
-    {% endfor %}
+    <div class="container">
+        <h1 style="font-size: 24px;">Incoming <a href="/clear" style="float:right; font-size:12px; color: #555; text-decoration:none; border:1px solid #333; padding:5px; border-radius:5px;">CLEAR</a></h1>
+        
+        {% for r in requests %}
+            <div class="req-card">
+                <div class="req-header">
+                    <span>{{ r.time }}</span>
+                </div>
+                <div class="song-title">{{ r.song }}</div>
+                <div class="artist-name">{{ r.artist }}</div>
+                {% if r.msg %}
+                    <div class="dedication">"{{ r.msg }}"</div>
+                {% endif %}
+            </div>
+        {% else %}
+            <p style="color: #666; text-align: center; margin-top: 50px;">No requests yet... time to drop a banger.</p>
+        {% endfor %}
+    </div>
 </body>
 </html>
