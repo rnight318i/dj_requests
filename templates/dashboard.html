@@ -8,7 +8,20 @@
 </head>
 <body>
     <div class="container">
-        <h1 style="font-size: 24px;">Incoming <a href="/clear" style="float:right; font-size:12px; color: #555; text-decoration:none; border:1px solid #333; padding:5px; border-radius:5px;">CLEAR</a></h1>
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h1 style="font-size: 24px; margin: 0;">Incoming</h1>
+            
+            <div style="display: flex; gap: 10px;">
+                <button onclick="enableAudio()" style="padding: 5px 10px; font-size: 12px; width: auto; background: #333;">
+                    🔊 Test Sound
+                </button>
+                
+                <a href="/clear" style="color: #555; text-decoration:none; border:1px solid #333; padding:5px 10px; border-radius:50px; display: flex; align-items: center;">
+                    CLEAR
+                </a>
+            </div>
+        </div>
         
         {% for r in requests %}
             <div class="req-card">
@@ -22,8 +35,45 @@
                 {% endif %}
             </div>
         {% else %}
-            <p style="color: #666; text-align: center; margin-top: 50px;">No requests yet... time to drop a banger.</p>
+            <p style="color: #666; text-align: center; margin-top: 50px;">
+                No requests yet...<br>
+                <span style="font-size: 0.8em;">(Don't forget to click "Test Sound"!)</span>
+            </p>
         {% endfor %}
     </div>
+
+    <audio id="alert-sound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto"></audio>
+
+    <script>
+        // Get the audio element
+        var audio = document.getElementById("alert-sound");
+
+        // Function to let the DJ unlock audio permissions
+        function enableAudio() {
+            audio.play();
+            alert("Sound Enabled! You will hear a ping on new requests.");
+        }
+
+        // Get the request count passed from Python
+        var currentCount = {{ requests|length }};
+        
+        // Get the previous count from browser memory
+        var lastCount = localStorage.getItem('dj_req_count');
+
+        // Logic: If we have more requests than last time, PLAY SOUND
+        if (lastCount !== null && currentCount > lastCount) {
+            // We use a promise to catch errors if the DJ hasn't clicked yet
+            var playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Audio blocked. DJ needs to click the page.");
+                });
+            }
+        }
+
+        // Save the new count for the next refresh
+        localStorage.setItem('dj_req_count', currentCount);
+    </script>
 </body>
 </html>
