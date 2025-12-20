@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>DJ Login</title>
+</head>
+<body>
+    <div class="container">
+        <h1>DJ <span>Access</span></h1>
+        
+        {% if error %}
+            <p style="color: red; text-align: center;">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST">
+            <input type="password" name="password" placeholder="Enter Admin Password" required>
+            <button type="submit">Unlock Dashboard 🔓</button>
+        </form>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="/" style="color: #666; text-decoration: none;">&larr; Back to Requests</a>
+        </div>
+    </div>
+</body>
+</html>
